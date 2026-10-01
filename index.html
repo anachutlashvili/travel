@@ -1,0 +1,315 @@
+﻿
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelGo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <a href="#home" class="logo">TravelGo</a>
+
+    <nav class="nav-bar">
+        <a href="#home">Home</a>
+        <a href="#destinations">Destinations</a>
+        <a href="#trips">My Trips</a>
+        <a href="#favorites">Favorites</a>
+        <a href="#cart">Cart <span id="cartCount">0</span></a>
+    </nav>
+
+    <div class="header-actions">
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Where do you want to go?">
+            <button id="searchBtn">Search</button>
+        </div>
+        <button id="themeBtn">🌙</button>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero" id="home">
+        <video class="hero-video" autoplay muted loop playsinline poster="egvipte.jpg">
+            <source src="From Klickpin.com- Need fresh inspiration Style these simple new year goals ideas that bring style function and personality together that balance.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content">
+            <h1>Explore Mystic Egypt</h1>
+            <p>Discover the beauty of Egypt, from ancient pyramids and mysterious temples to golden deserts and the Nile.</p>
+            <button id="planHeroBtn" class="main-btn">Plan Your Trip</button>
+        </div>
+    </section>
+
+    <section class="destinations-section" id="destinations">
+        <div class="section-title">
+            <span>TravelGo</span>
+            <h2>Choose Your Destination</h2>
+            <p>Discover amazing places and plan your next adventure.</p>
+        </div>
+
+        <div class="filters">
+            <input type="text" id="destinationSearch" placeholder="Search city or country...">
+
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="Europe">Europe</option>
+                <option value="Asia">Asia</option>
+                <option value="America">America</option>
+            </select>
+
+            <select id="priceFilter">
+                <option value="all">All Prices</option>
+                <option value="500">Under 500 ₾</option>
+                <option value="500-1000">500–1000 ₾</option>
+                <option value="1000">Over 1000 ₾</option>
+            </select>
+
+            <select id="sortSelect">
+                <option value="default">Sort by</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Rating</option>
+                <option value="days">Number of Days</option>
+            </select>
+        </div>
+
+        <p id="noResults" class="no-results">Destination not found.</p>
+
+        <div class="destination-grid" id="destinationContainer"></div>
+    </section>
+
+    <section class="slider-section">
+        <div class="tr-slider">
+            <button class="slider-btn prev" id="prevBtn">‹</button>
+
+            <div class="slider-list" id="sliderList"></div>
+
+            <button class="slider-btn next" id="nextBtn">›</button>
+        </div>
+    </section>
+
+    <section class="trips-section" id="trips">
+        <div class="section-title">
+            <span>TravelGo</span>
+            <h2>My Trips</h2>
+            <p>Your planned adventures will appear here.</p>
+        </div>
+
+        <div class="trips-container" id="tripsContainer">
+            <p class="empty-message">You don't have any planned trips yet.</p>
+        </div>
+    </section>
+
+    <section class="favorites-section" id="favorites">
+        <div class="section-title">
+            <span>TravelGo</span>
+            <h2>My Favorites</h2>
+            <p>Save the places you want to visit later.</p>
+        </div>
+
+        <div class="favorites-container" id="favoritesContainer">
+            <p class="empty-message">You don't have any favorite destinations yet.</p>
+        </div>
+    </section>
+
+    <section class="dashboard-section">
+        <div class="section-title">
+            <span>TravelGo</span>
+            <h2>Travel Dashboard</h2>
+        </div>
+
+        <div class="dashboard">
+
+            <div class="dashboard-card">
+                <span>🌍</span>
+                <h3 id="totalTrips">0</h3>
+                <p>My Trips</p>
+            </div>
+
+            <div class="dashboard-card">
+                <span>❤️</span>
+                <h3 id="totalFavorites">0</h3>
+                <p>Favorites</p>
+            </div>
+
+            <div class="dashboard-card">
+                <span>🛒</span>
+                <h3 id="totalCart">0</h3>
+                <p>Cart Items</p>
+            </div>
+
+            <div class="dashboard-card">
+                <span>💰</span>
+                <h3 id="totalSpent">0 ₾</h3>
+                <p>Total Spending</p>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<div class="modal" id="detailModal">
+    <div class="modal-content">
+
+        <button class="close-btn" id="closeDetailModal">×</button>
+
+        <div class="modal-gallery">
+            <button class="gallery-btn gallery-prev" id="galleryPrev">‹</button>
+
+            <img id="modalMainImage" src="" alt="Destination">
+
+            <button class="gallery-btn gallery-next" id="galleryNext">›</button>
+        </div>
+
+        <div class="thumbnail-container" id="thumbnailContainer"></div>
+
+        <div class="modal-info">
+            <span id="modalCountry">Country</span>
+            <h2 id="modalName">Destination</h2>
+
+            <div class="modal-details">
+                <p>💰 <span id="modalPrice">0</span> ₾</p>
+                <p>⭐ <span id="modalRating">0</span></p>
+                <p>📅 <span id="modalDays">0</span> days</p>
+            </div>
+
+            <p id="modalDescription">Destination description.</p>
+
+            <div class="modal-buttons">
+                <button id="favoriteBtn" class="modal-btn">♡ Add to Favorites</button>
+                <button id="cartBtn" class="modal-btn">🛒 Add to Cart</button>
+                <button id="planTripBtn" class="modal-btn">✈ Plan Trip</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal" id="plannerModal">
+    <div class="modal-content planner-content">
+
+        <button class="close-btn" id="closePlannerModal">×</button>
+
+        <h2>Plan Your Trip</h2>
+
+        <form id="tripForm">
+
+            <label>
+                Your Name
+                <input type="text" id="userName" required>
+            </label>
+
+            <label>
+                Destination
+                <select id="tripDestination" required></select>
+            </label>
+
+            <div class="form-row">
+                <label>
+                    Departure Date
+                    <input type="date" id="departureDate" required>
+                </label>
+
+                <label>
+                    Return Date
+                    <input type="date" id="returnDate" required>
+                </label>
+            </div>
+
+            <label>
+                Number of People
+                <input type="number" id="peopleCount" min="1" value="1" required>
+            </label>
+
+            <label>
+                Hotel
+                <select id="hotelType">
+                    <option value="none">No Hotel</option>
+                    <option value="standard">Standard — 100 ₾ / day</option>
+                    <option value="premium">Premium — 180 ₾ / day</option>
+                </select>
+            </label>
+
+            <label>
+                Food
+                <select id="foodType">
+                    <option value="none">No Food</option>
+                    <option value="food">Food — 50 ₾ / person / day</option>
+                </select>
+            </label>
+
+            <label>
+                Transport
+                <select id="transportType">
+                    <option value="none">No Transport</option>
+                    <option value="transport">Transport — 150 ₾</option>
+                </select>
+            </label>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="insurance">
+                Travel Insurance — 80 ₾ / person
+            </label>
+
+            <div class="price-box" id="totalPrice">Total: 0 ₾</div>
+
+            <p id="formError" class="form-error"></p>
+
+            <button type="submit" class="main-btn">Save Trip</button>
+        </form>
+
+    </div>
+</div>
+
+<div class="modal" id="cartModal">
+    <div class="modal-content cart-content">
+
+        <button class="close-btn" id="closeCartModal">×</button>
+
+        <h2>My Cart</h2>
+
+        <div id="cartContainer" class="cart-container">
+            <p class="empty-message">Your cart is empty.</p>
+        </div>
+
+        <div class="cart-total">
+            Total: <strong id="cartTotal">0 ₾</strong>
+        </div>
+
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-content">
+
+        <div>
+            <h2>TravelGo</h2>
+            <p>Discover the world and create unforgettable journeys.</p>
+        </div>
+
+        <div>
+            <h3>Explore</h3>
+            <a href="#home">Home</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#trips">My Trips</a>
+            <a href="#favorites">Favorites</a>
+        </div>
+
+        <div>
+            <h3>TravelGo</h3>
+            <p>Plan your next adventure with us.</p>
+        </div>
+
+    </div>
+
+    <p class="copyright">© 2026 TravelGo. All rights reserved.</p>
+</footer>
+
+<script src="index.js"></script>
+
+</body>
+</html>
